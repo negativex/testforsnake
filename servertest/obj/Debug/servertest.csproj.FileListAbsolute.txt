@@ -1,0 +1,11 @@
+C:\Users\NGOC\source\repos\Testforsnake\servertest\bin\Debug\servertest.exe.config
+C:\Users\NGOC\source\repos\Testforsnake\servertest\bin\Debug\servertest.exe
+C:\Users\NGOC\source\repos\Testforsnake\servertest\bin\Debug\servertest.pdb
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.csproj.AssemblyReference.cache
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.csproj.SuggestedBindingRedirects.cache
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.server.resources
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.Properties.Resources.resources
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.csproj.GenerateResource.cache
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.csproj.CoreCompileInputs.cache
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.exe
+C:\Users\NGOC\source\repos\Testforsnake\servertest\obj\Debug\servertest.pdb

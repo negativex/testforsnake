@@ -1,117 +1,146 @@
 ﻿using System;
-using System.Windows.Forms;
-using System.Net.Sockets;
+using System.Collections;
 using System.Net;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading;
-
+using System.Windows.Forms;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using Snake;
 namespace Testforsnake
 {
     internal class network
     {
-        public void Client()
-        {
-            //CheckForIllegalCrossThreadCalls = false;
-            Connect();
-        }
+        //private TcpClient tcpClient;
+        //private StreamWriter sWriter;
+        //private Thread clientthread;
+        //private int svport = 8888;
+        //private bool stopclient = true;
+        
+        //private void ClientRecv()
+        //{
+        //    StreamReader sr = new StreamReader(tcpClient.GetStream());
+        //    try
+        //    {
+        //        while (!stopclient)
+        //        {
+        //            Application.DoEvents();
+        //            string data = sr.ReadLine();
+        //            //UpdateChatHistoryThreadSafe($"{data}\n");
+        //        }
+        //    }
+        //    catch (SocketException)
+        //    {
+        //        tcpClient.Close();
+        //        sr.Close();
 
-        private void btn_send_Click(object sender, EventArgs e)
-        {
-            //Send();
-            //AddMessage(txtB_message.Text);
-        }
+        //    }
+        //}
+        
+        //private delegate void SafeCallDelegate(string text);
 
-        IPEndPoint IP;
-        Socket client;
+        ////private void UpdateChatHistoryThreadSafe(string text)
+        ////{
+        ////    if (richTextBox1.InvokeRequired)
+        ////    {
+        ////        var d = new SafeCallDelegate(UpdateChatHistoryThreadSafe);
+        ////        richTextBox1.Invoke(d, new object[] { text });
+        ////    }
+        ////    else
+        ////    {
+        ////        richTextBox1.Text += text;
+        ////    }
+        ////}
 
+        //private void sendinnw(object sender, EventArgs e)
+        //{
+        //    try
 
-        //ket noi toi server
-        void Connect()
-        {
-            IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9991);
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+        //    {
+        //        sWriter.WriteLine(Input.KeyPressed(Keys.A));
+        //        //mess_txt.Text = "";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
 
-            try
-            {
-                client.Connect(IP);
-            }
-            catch
-            {
-                MessageBox.Show("Can't connect!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+        //private void connect_btn_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        stopclient = false;
 
-            Thread listen = new Thread(Receive);
-            listen.IsBackground = true;
-            listen.Start();
-        }
+        //        this.tcpClient = new TcpClient();
+        //        this.tcpClient.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), svport));
+        //        this.sWriter = new StreamWriter(tcpClient.GetStream());
+        //        this.sWriter.AutoFlush = true;
+        //        sWriter.WriteLine(this.user_name_txt.Text);
+        //        clientthread = new Thread(this.ClientRecv);
+        //        clientthread.Start();
+        //        richTextBox1.Text += "Connected\n";
+        //    }
+        //    catch (SocketException sockEx)
+        //    {
+        //        MessageBox.Show(sockEx.Message, "Network error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
+        //private void clickk()
+        //{
+        //    try
+        //    {
+        //        stopclient = false;
 
-        //dong ket noi
-        void Close()
-        {
-            client.Close();
-        }
+        //        this.tcpClient = new TcpClient();
+        //        this.tcpClient.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), svport));
+        //        this.sWriter = new StreamWriter(tcpClient.GetStream())
+        //        {
+        //            AutoFlush = true
+        //        };
+        //        sWriter.WriteLine(this.user_name_txt.Text);
+        //        clientthread = new Thread(this.clientrecivefile);
+        //        clientthread.Start();
+        //        MessageBox.Show("Connected");
+        //    }
+        //    catch (SocketException sockEx)
+        //    {
+        //        MessageBox.Show(sockEx.Message, "Network error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
+        //private void press()
+        //{
+        //    try
+        //    {
+        //        stopclient = false;
 
-        //gui tin
-        void Send()
-        {
-            //if (txtB_message.Text != string.Empty)
-            //    client.Send(Serialize(txtB_message.Text));
-        }
-
-        //nhan tin
-        void Receive()
-        {
-            try
-            {
-                while (true)
-                {
-                    byte[] data = new byte[1024 * 5000];
-                    client.Receive(data);
-
-                    string message = (string)Deserialize(data);
-
-                    AddMessage(message);
-                }
-            }
-            catch
-            {
-                Close();
-            }
-
-        }
-
-
-        void AddMessage(string s)
-        {
-            //lstV_message.Items.Add(new ListViewItem() { Text = s });
-            //txtB_message.Clear();
-        }
-
-        // phan manh
-        byte[] Serialize(object obj)
-        {
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Serialize(stream, obj);
-
-            return stream.ToArray();
-        }
-
-        //gom manh
-        object Deserialize(byte[] data)
-        {
-            MemoryStream stream = new MemoryStream(data);
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            return formatter.Deserialize(stream);
-        }
-
-        private void Client_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Close();
-        }
+        //        this.tcpClient = new TcpClient();
+        //        this.tcpClient.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), svport));
+        //        this.sWriter = new StreamWriter(tcpClient.GetStream());
+        //        this.sWriter.AutoFlush = true;
+        //        sWriter.WriteLine(this.user_name_txt.Text);
+        //        clientthread = new Thread(this.ClientRecv);
+        //        clientthread.Start();
+        //        richTextBox1.Text += "Connected\n";
+        //    }
+        //    catch (SocketException sockEx)
+        //    {
+        //        MessageBox.Show(sockEx.Message, "Network error", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
     }
 }
